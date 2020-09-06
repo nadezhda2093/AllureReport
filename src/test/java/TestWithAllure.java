@@ -18,13 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestWithAllure {
     final String SITE_URL = "https://testingcup.pgs-soft.com/";
+    //    final String SITE_URL = "https://testingcup.pgs-soft.com/task_7";
     WebDriver driver;
 
     @BeforeEach
-    public void start(){
+    public void start() {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
-        options.setHeadless(true);
+//        options.setHeadless(true);
         driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -47,7 +48,7 @@ public class TestWithAllure {
     @Description("In this test we will login with correct credentials. When we logged we see link for file.")
     @Story(value = "Test for login with correct credentials")
     @Test
-    public void testSixCheckLoginWithCorrectCredentials(){
+    public void testSixCheckLoginWithCorrectCredentials() {
         chooseTaskSix();
         fillInLogin("tester");
         fillInPassword("123-xyz");
@@ -55,14 +56,14 @@ public class TestWithAllure {
         isLoginUnsuccessful();
     }
 
-    @Epic ("TESTING FOR https://testingcup.pgs-soft.com/ tasks")
+    @Epic("TESTING FOR https://testingcup.pgs-soft.com/ tasks")
     @Feature(value = "Tests for task 6")
     @Severity(SeverityLevel.MINOR)
     @Description("In this test we will login with correct credentials. When we logged we see link for file.")
     @Story(value = "Test for login with incorrect credentials")
 
     @Test
-    public void testSixCheckLoginWithIncorrectCredentials(){
+    public void testSixCheckLoginWithIncorrectCredentials() {
         driver.findElement(By.linkText("Zadanie 6")).click();
         driver.findElement(By.id("LoginForm__username")).sendKeys("tester");
         driver.findElement(By.id("LoginForm__password")).sendKeys("12,4-xyw");
@@ -71,29 +72,52 @@ public class TestWithAllure {
     }
 
     @Step(value = "Fill in login with {0}")
-    public void fillInLogin(String login){
+    public void fillInLogin(String login) {
         driver.findElement(By.id("LoginForm__username")).sendKeys(login);
     }
 
     @Step(value = "Fill in password with {0}")
-    public void fillInPassword(String password){
+    public void fillInPassword(String password) {
         driver.findElement(By.id("LoginForm__password")).sendKeys(password);
     }
 
     @Step(value = "Click button Login")
-    public void loginButtonClick(){
+    public void loginButtonClick() {
         driver.findElement(By.id("LoginForm_save")).click();
     }
+
     @Step(value = "Choose task 6 on main page")
-    public void chooseTaskSix(){
+    public void chooseTaskSix() {
         driver.findElement(By.linkText("Zadanie 6")).click();
     }
+
     @Step(value = "Login was successful")
-    public void isLoginSuccessful(){
+    public void isLoginSuccessful() {
         assertTrue(driver.findElement(By.linkText("Pobierz plik")).isDisplayed());
     }
+
     @Step(value = "Login was unsuccessful")
-    public void isLoginUnsuccessful(){
+    public void isLoginUnsuccessful() {
         assertFalse(driver.findElements(By.linkText("Pobierz plik")).isEmpty());
     }
+
+//    @Test
+    /**
+     * Добавить зависимость testng для запуска этого теста
+     */
+//    public void addProductWithDragAndDrop() {
+//        WebElement fieldProductNumber = driver.findElement(By.xpath("//h4[text()='Aparat']/following-sibling::div/input"));
+//        fieldProductNumber.sendKeys("2");
+//
+//        WebElement productImage = driver.findElement(By.xpath("//div[h4='Aparat']/preceding-sibling::div/img"));
+//        WebElement basket = driver.findElement(By.cssSelector(".panel-body"));
+//
+//        Actions action = new Actions(driver);
+//        action.dragAndDrop(productImage, basket).perform();
+//
+//        WebElement basketAmountForProduct = driver.findElement(By.xpath("//span[@data-quantity-for='Aparat']"));
+//
+//        assertEquals("20", basketAmountForProduct.getText());
+//
+//    }
 }
